@@ -105,6 +105,9 @@ export class RangeLogic extends LogicBase<RangeLogicState> {
     }
     if (range) {
       var keyNum = Number("0x" + key.substring(1, 3));
+      if (keyNum >= 0x50) {
+        return this.state;
+      }
       keyNum = keyNum | 0x80;
       let key2 = "H" + keyNum.toString(16).toUpperCase();
       range.forEach(element => {
@@ -124,12 +127,19 @@ export class RangeLogic extends LogicBase<RangeLogicState> {
             min_value = value >> 16;
             max_value = value & 0xFFF;
           }
-
-          this.state.status = {
-            min: min_value,
-            max: max_value,
-            step: 1,
-          };
+          if (values instanceof Array) {
+            this.state.status = {
+              min: min_value,
+              max: max_value,
+              step: 1,
+            };
+          } else {
+            this.state.status = {
+              min: min_value,
+              max: max_value,
+              step: values.step,
+            };
+          }
         } else if (element[key2]) {
           let value: number = element[key2];
           let min_value: number = value >> 8;
@@ -147,11 +157,19 @@ export class RangeLogic extends LogicBase<RangeLogicState> {
             max_value = value & 0xFFF;
           }
 
-          this.state.status = {
-            min: min_value,
-            max: max_value,
-            step: 1,
-          };
+          if (values instanceof Array) {
+            this.state.status = {
+              min: min_value,
+              max: max_value,
+              step: 1,
+            };
+          } else {
+            this.state.status = {
+              min: min_value,
+              max: max_value,
+              step: values.step,
+            };
+          }
         }
       });
     } else

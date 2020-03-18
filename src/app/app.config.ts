@@ -75,7 +75,7 @@ export const appConfig: AppConfig = {
     },
     theme: {
       primaryColor: '#00baff',
-      productName: 'CHIMEI 智慧家電',
+      productName: '太一智慧家電',
       wifiName: 'CHIMEI-XXXX',
     },
     amazonAlexa: {
