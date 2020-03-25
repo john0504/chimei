@@ -1,0 +1,21 @@
+﻿android:
+delete platform & plugins
+	rd /q /s platforms,plugins
+
+add platform
+	ionic cordova platform add android
+
+build release file
+	cordova build --release android
+
+ignore this step if you had generated the keystore
+	keytool -genkey -v -keystore my-release-key.keystore -alias chimei -keyalg RSA -keysize 2048 -validity 10000 
+
+
+copy apk file into root folder
+
+	jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore app-release-unsigned.apk chimei
+
+	chimei
+
+	zipalign -v 4 app-release-unsigned.apk chimei.apk
